@@ -1,0 +1,196 @@
+4年　情報　11番　菅野　匠　レポート16
+1.
+import javax.swing.*;
+public class MyFrame extends JFrame
+{
+    private MyPanel mp; // MyFrame HAS-A MyPanel の関係を構築
+    public MyFrame()
+    {
+        this.mp = new MyPanel();
+        getContentPane().add(this.mp);
+    }
+    public static void main(String[] args) {
+                MyFrame a = new MyFrame();
+                a.setBounds(100,100,400,400);
+                a.setVisible(true);
+        }
+}
+
+import javax.swing.*;
+import java.awt.*;
+public class MyPanel extends JPanel // **** JFrameではない!! ****
+{
+    public MyPanel()
+    {
+        setBackground(Color.white); // 背景を白に設定
+        setPreferredSize(new Dimension(640, 480)); // 大きさを640x480に設定
+    }
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g); // まずJPanelのデフォルトの描画処理(背景色でク>リア)を行い,
+        g.drawLine(50, 50, 100, 100); // その後, 独自の図形を描画する
+        g.drawOval(32, 16, 256, 128);
+        g.drawString("文字列をグラフィックスとして表示", 48, 48);
+
+    }
+}
+
+開発者向けの解説
+MyPanelクラスをMyFrameが継承している。機能自体はMyPnelが持っており、それをMyFrameで表示している。今回の場合、機能としては円と直線とテキストを表示させる機能を持っている。
+
+2.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+
+public class MyJSlider extends JFrame implements ChangeListener{
+        private JSlider s1;
+        private JTextField tf1;
+
+        public MyJSlider(){
+        super();
+        this.s1 = new JSlider();
+        this.tf1 = new JTextField(5);
+
+        JPanel p1 = new JPanel();
+
+        BorderLayout bord1 = new BorderLayout();
+        p1.setLayout(bord1);
+
+        p1.add(this.s1, BorderLayout.CENTER);
+        p1.add(this.tf1, BorderLayout.SOUTH);
+
+        this.tf1.setText("値:" + this.s1.getValue());
+        getContentPane().add(p1);
+        this.s1.addChangeListener(this);
+        }
+        public void stateChanged(ChangeEvent e){
+                if (e.getSource() == this.s1){
+                        this.tf1.setText("値:" + this.s1.getValue());
+                }
+
+        }
+
+
+
+        public static void main (String[] args){
+                MyJSlider a = new MyJSlider();
+                a.setBounds(200,200,400,400);
+                a.setVisible(true);
+        }
+
+
+}
+開発者向け解説：
+JSliderを使って初期値が５０でそこから最低値を０、最大値を１００に設定してスライダーを移動するたびにテキストの値が変化するようにgetValue()を使って受取、リアルタイムで値が変化するようにしました。
+3.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+public class MyFrame extends JFrame implements ChangeListener
+{
+    private MyPanel mp; // MyFrame HAS-A MyPanel の関係を構築
+    private JSlider s1,s2,s3;
+    private JTextField t1,t2,t3;
+    public MyFrame()
+    {
+        this.mp = new MyPanel();
+        this.s1 = new JSlider(0,255,0);
+        this.s2 = new JSlider(0,255,0);
+        this.s3 = new JSlider(0,255,0);
+        this.t1 = new JTextField("赤",5);
+        this.t2 = new JTextField("緑",5);
+        this.t3 = new JTextField("青",5);
+        JPanel p1 = new JPanel();
+        JPanel p2 = new JPanel();
+        JPanel p3 = new JPanel();
+        BorderLayout bord1 = new BorderLayout();
+        FlowLayout flow1 = new FlowLayout();
+        GridLayout grid1 = new GridLayout(3,2);
+        p1.setLayout(bord1);
+        p3.setLayout(grid1);
+        p3.add(this.s1);
+        p3.add(this.t1);
+        p3.add(this.s2);
+        p3.add(this.t2);
+        p3.add(this.s3);
+        p3.add(this.t3);
+        p1.add(p3, BorderLayout.SOUTH);
+        p1.add(this.mp, BorderLayout.CENTER);
+        getContentPane().add(p1);
+        this.s1.addChangeListener(this);
+        this.s2.addChangeListener(this);
+        this.s3.addChangeListener(this);
+    }
+    public void stateChanged(ChangeEvent e){
+        if (e.getSource() == this.s1){
+                int r = this.s1.getValue();
+                this.t1.setText("赤" + r );
+                this.mp.setR(r);
+                }
+        else if (e.getSource() == this.s2){
+                int g = this.s2.getValue();
+                this.t2.setText("緑" + g);
+                this.mp.setG(g);
+                }
+        else if (e.getSource() == this.s3){
+                int b = this.s3.getValue();
+                this.t3.setText("青" + b);
+                this.mp.setB(b);
+                }
+        this.mp.repaint();
+    }
+    public static void main(String[] args) {
+                MyFrame a = new MyFrame();
+                a.setBounds(300,300,500,500);
+                a.setVisible(true);
+        }
+}
+
+
+
+import javax.swing.*;
+import java.awt.*;
+public class MyPanel extends JPanel // **** JFrameではない!! ****
+{
+    private int r;
+    private int g;
+    private int b;
+    public MyPanel()
+    {
+        setBackground(Color.white); // 背景を白に設定
+        setPreferredSize(new Dimension(640, 480)); // 大きさを640x480に設定
+    }
+    public void setR(int r){
+        this.r = r;
+    }
+    public void setG(int g){
+        this.g = g;
+    }
+    public void setB(int b){
+        this.b = b;
+    }
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g); // まずJPanelのデフォルトの描画処理(背景色でク>リア)を行い,
+        g.setColor(new Color(this.r,this.g,this.b));
+        g.fillOval(200, 200, 256, 128);
+
+    }
+}
+
+ユーザ向け解説：
+下のスライダーによって楕円の中の色が変化します。
+開発者向け解説：
+JSliderを３つ用意してそれぞれR、G、Bで色を変化するようにしてそれをイベントソースとしてそれぞれにリスナーに反応させて値を変化してそれをMyJPanelでセッターを作り値を受け取って、最後にsetColorメソッドを使って受とり、リアルタイムで色を変化するように作りました。また課題２の機能を一部引き継ぎJTextFieldで値を確認できるようにもしました
+
+4.
+setColor
+サイト：https://www.javadrive.jp/applet/graphics/index3.html
+setColorはGraphicsクラスのメソッドの一つで引数としてデフォルトで用意されている色か、RGBのそれぞれの値をint型として与えることで色を決めることができます。
+
+JSlider
+サイト:https://www.javadrive.jp/tutorial/jslider/index4.html
+JSliderでは、最大値、最小値、初期値を決めることができます。初期化する際に引数として与えて使用します。

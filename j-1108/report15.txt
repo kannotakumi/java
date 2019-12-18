@@ -1,0 +1,240 @@
+4J 11 菅野　匠　15回
+1:
+import java.io.*;
+public class CatText
+{
+        public static void main(String[] args){
+
+                try
+                {
+                        FileReader fr = new FileReader(args[0]); // ファイルを開く.
+                        BufferedReader br = new BufferedReader(fr);
+                        String buf;
+                        while ((buf = br.readLine()) != null) // 1行読み込み, それがnullでなければ,
+                                {
+                                        System.out.println(buf); // bufを処理する(この例では表示するだけ).
+                                }
+                        br.close();
+                        fr.close(); // ファイルを閉じる.
+                }
+                catch (IOException e) // もしエラーが起きたら,
+                      {
+                              System.out.println("ファイル読み込みエラー");
+                              System.exit(1); // 実行終了
+                      }
+        }
+
+
+}
+2:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class kadai2 extends JFrame implements ActionListener{
+
+        private JButton b1;
+        private JTextField f1;
+        private JTextArea a1;
+
+        public kadai2(){
+        super();
+        this.b1 = new JButton("読み込み");
+        this.f1 = new JTextField(20);
+        this.a1 = new JTextArea(20,30);
+
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        BorderLayout bord1 = new BorderLayout();
+        FlowLayout flow1 = new FlowLayout();
+        panel1.setLayout(null);
+        panel2.setLayout(bord1);
+        panel3.setLayout(flow1);
+        panel2.setBounds(150,100,350,300);
+        panel3.setBounds(150,450,200,200);
+        panel3.add(this.b1);
+        panel2.add(this.f1,BorderLayout.NORTH);
+        panel2.add(this.a1,BorderLayout.CENTER);
+
+        panel1.add(panel2);
+        panel1.add(panel3);
+        getContentPane().add(panel1);
+        this.b1.addActionListener(this);
+        }
+        public void actionPerformed(ActionEvent e){
+                String all = "";
+                String s2 = "";
+                if (e.getSource() == this.b1){
+                        try {
+                        String s = this.f1.getText();
+                        FileReader fr = new FileReader(s);
+                        BufferedReader br = new BufferedReader(fr);
+                        String buf;
+                        while ((buf = br.readLine()) != null)
+                        {
+                        all += buf;
+                        all += System.getProperty("line.separator");
+                        }
+                        this.a1.setText(all);
+                        br.close();
+                        fr.close();
+                        }
+                        catch (IOException a){
+                                System.out.println("error");
+                                System.exit(0);
+                        }
+                }
+        }
+
+        public static void main(String[] args){
+                kadai2 a = new kadai2();
+                a.setBounds(0,0,800,800);
+                a.setVisible(true);
+        }
+}
+ユーザー向け解説：
+一番上のテキスト欄に同じディレクトリ内のテキストファイルなどの名前を入力し、読み込みのボタンを押すことでその下のテキスト欄に内容が表示されます。
+開発者向け解説：
+至って単純なファイルオープンです。ここから拡張していけば、保存やショートカットによる機能なども追加できると思います。
+３：
+else if (e.getSource() == this.b2){
+                        try{
+                        String s = this.f1.getText();
+                        FileWriter fw = new FileWriter(s);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        s2 = this.a1.getText();
+                        bw.write(s2);
+                        bw.close();
+                        fw.close();
+                        }
+                        catch (IOException g){
+                                System.out.println("error");
+                        }
+                }
+ユーザー向け解説：
+下の広いテキスト欄に記入した内容を上のテキスト欄で名前をつけてもらい、保存ボタンを押すと、同じディレクトリ内にファイルが保存されます。
+開発者向け解説：
+今はクラスと同じディレクトリ内に保存ですが、保存するディレクトリを指定したり、任意で保存した居場所を決めるなどの拡張も可能かと思います。
+４：
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class kadai4 extends JFrame implements ActionListener{
+
+        private JButton b1,b2;
+        private JTextArea a1;
+        private JTextField f1;
+
+        public kadai4(){
+        super();
+        this.b1 = new JButton("読み込み");
+        this.b2 = new JButton("保存");
+        this.a1 = new JTextArea(20,30);
+        this.f1 = new JTextField(20);
+
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        BorderLayout bord1 = new BorderLayout();
+        FlowLayout flow1 = new FlowLayout();
+        panel1.setLayout(null);
+        panel2.setLayout(bord1);
+        panel3.setLayout(flow1);
+        panel2.setBounds(150,100,350,300);
+        panel3.setBounds(150,450,200,200);
+        panel3.add(this.b1);
+        panel3.add(this.b2);
+        panel2.add(this.f1,BorderLayout.NORTH);
+        panel2.add(this.a1,BorderLayout.CENTER);
+
+        panel1.add(panel2);
+        panel1.add(panel3);
+        getContentPane().add(panel1);
+        this.b1.addActionListener(this);
+        this.b2.addActionListener(this);
+        }
+        public void actionPerformed(ActionEvent e){
+                JFileChooser fo = new JFileChooser();
+                JFileChooser fs = new JFileChooser();
+                String all = "";
+                String s2 = "";
+                if (e.getSource() == this.b1){
+
+                        int selected1 = fo.showOpenDialog(this);
+                        if(selected1 == JFileChooser.APPROVE_OPTION){
+                                File file = fo.getSelectedFile();
+                        try{
+                                if (checkBeforeReadfile(file)){
+                                       BufferedReader br = new BufferedReader(new FileReader(file));
+                                        String buf;
+                                        while ((buf = br.readLine()) != null){
+                                                all += buf;
+                                                all += System.getProperty("line.separator");
+                                        }
+                                this.a1.setText(all);
+                                br.close();
+                                }
+                                else{
+                                all += "ファイルが見つかりません";
+                                this.a1.setText(all);
+                                }
+                        }
+                        catch(FileNotFoundException err){
+                                System.out.println("err");
+                        }
+                        catch(IOException err){
+                        System.out.println("err");
+                        }
+                }
+                }
+                else if (e.getSource() == this.b2){
+
+                        int selected2 = fs.showSaveDialog(this);
+                        if (selected2 == JFileChooser.APPROVE_OPTION){
+                                File file = fs.getSelectedFile();
+                        try{
+                                String s = this.f1.getText();
+                                FileWriter fw = new FileWriter(s);
+                                BufferedWriter bw = new BufferedWriter(fw);
+                                s2 = this.a1.getText();
+                                bw.write(s2);
+                                bw.close();
+                                fw.close();
+
+                          }
+
+                        catch(IOException err){
+                        System.out.println("err");
+                        }
+                }
+        }
+        }
+        public static void main(String[] args){
+                kadai4 a = new kadai4();
+                a.setBounds(0,0,800,800);
+                a.setVisible(true);
+        }
+         private static boolean checkBeforeReadfile(File file){
+            if (file.exists()){
+                if (file.isFile() && file.canRead()){
+                return true;
+                }
+                }
+
+                return false;
+                }
+
+}
+
+追加したセールスポイント：
+ダイアログを使うことでファイルの選択や任意の場所に保存で切るようにしました。
+ユーザー向け解説：
+読み込みでは、読み込みのボタンを押してもらうとダイアログが表示され、そこから読み込みたいファイルをクリックしてもらうその中身がテキスト欄に表示されます。また保存では二度手間なのですが、上のテキスト欄に保存したい名前を入力し、ダイアログでも名前を入力してもらう必要があります。
+開発者むけ解説・将来追加してみたい機能：
+さっきも存じたとおり、保存の際の二度手間になってしまうのが問題です。将来追加したい機能と同じで言いますが、このファイル保存の際、名前付けをダイアログで行えるようにしたいです。またCont+sで保存や行のテキストをカットして貼り付けなどもしてみたいです。
+
+

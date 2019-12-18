@@ -1,0 +1,236 @@
+4J 情報　11番　菅野　匠　テーマ13
+kadai1:
+import javax.swing.*;
+import java.awt.*;
+public class kadai1 extends JFrame{
+        private JLabel label1;
+        private JButton button1;
+        private JButton button2;
+
+        public kadai1(){
+                super();
+                this.label1 = new JLabel("hello");
+                this.button1 = new JButton("push!");
+                this.button2 = new JButton("don't push");
+                JPanel panel1 = new JPanel();
+                FlowLayout flow1 = new FlowLayout();
+                panel1.setLayout(flow1);
+                panel1.add(this.label1);
+                panel1.add(this.button1);
+                panel1.add(this.button2);
+                getContentPane().add(panel1);
+        }
+        public static void main(String[] args){
+                kadai1 a = new kadai1();
+
+                a.setSize(800,800);
+                a.setLocation(100,100);
+                a.setVisible(true);
+        }
+}
+解説：ラベルとボタンをとりあえず並べてみました。特に中身については考えてませんでした。
+kadai2:
+import javax.swing.*;
+import java.awt.*;
+public class kadai2 extends JFrame{
+        private JLabel label1;
+        private JButton button1;
+        private JButton button2;
+
+        public kadai2(){
+                super();
+                this.label1 = new JLabel("hello");
+                this.button1 = new JButton("push!");
+                this.button2 = new JButton("don't push");
+                JPanel panel1 = new JPanel();
+                BorderLayout border1 = new BorderLayout();
+                panel1.setLayout(border1);
+                panel1.add(this.label1,BorderLayout.SOUTH);
+                panel1.add(this.button1,BorderLayout.WEST);
+                panel1.add(this.button2,BorderLayout.EAST);
+                getContentPane().add(panel1);
+        }
+        public static void main(String[] args){
+                kadai2 a = new kadai2();
+
+                a.setSize(800,800);
+                a.setLocation(100,100);
+                a.setVisible(true);
+        }
+}
+
+解説：
+課題１と違ったレイアウトを使ったのですが、labelのHelloだけがなぜか下にあってしまい、原因がつかめませんでした。
+
+kadai3:
+import javax.swing.*;
+import java.awt.*;
+
+public class ComplexFrame extends JFrame {
+        private JButton button1;
+        private JButton button2;
+        private JButton button3;
+        private JButton button4;
+        private JLabel label1;
+        private JLabel label2;
+
+        public ComplexFrame(){
+                super();
+                this.label1 = new JLabel("greeting");
+                this.label2 = new JLabel("type");
+                this.button1 = new JButton("hello");
+                this.button2 = new JButton("привет там");
+                this.button4 = new JButton("こんにちわ");
+                FlowLayout flow1 = new FlowLayout();
+                BorderLayout border1 = new BorderLayout();
+                JPanel panel1 = new JPanel();
+                JPanel panel2 = new JPanel();
+                panel1.setLayout(flow1);
+                panel1.add(label1);
+                panel1.add(button4);
+
+                panel2.setLayout(border1);
+                panel2.add(panel1,BorderLayout.NORTH);
+                panel2.add(label2,BorderLayout.SOUTH);
+                panel2.add(button1,BorderLayout.EAST);
+                panel2.add(button2,BorderLayout.WEST);
+
+                getContentPane().add(panel2);
+        }
+
+        public static void main(String[] args){
+                ComplexFrame a = new ComplexFrame();
+                a.setSize(1000,1000);
+                a.setLocation(100,100);
+                a.setVisible(true);
+
+
+}
+}
+解説：
+panelを二つ用意してpanel1を日本語の挨拶と種類にしてそのパネルの中にpanel2を入れてその中身をtypeとしてこんにちわをドイツ語とロシア語にした挨拶に変えた世界挨拶のような形にしました。
+kadai4:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class FreeFrame1 extends JFrame implements ActionListener{
+
+        private JLabel label1;
+        private JLabel ti;
+        private JButton button1;
+        private JButton button2;
+        private JLabel end1;
+        private JLabel end2;
+        private JPanel panel;
+        public FreeFrame1(){
+                super();
+                this.panel = new JPanel();
+                panel.setLayout(null);
+                this.button1 = new JButton("Download");
+                button1.setBounds(40,170,100,50);
+                this.button2 = new JButton("Cancel");
+                button2.setBounds(300,170,100,50);
+                this.label1 = new JLabel("choice!");
+                label1.setBounds(175,0,100,50);
+
+                this.ti = new JLabel("kushirokosen.zip");
+                ti.setBounds(160, 50, 200, 50);
+
+                panel.add(label1);
+                panel.add(ti);
+                panel.add(button1);
+                panel.add(button2);
+
+                getContentPane().add(panel);
+
+                this.button1.addActionListener(this);
+                this.button2.addActionListener(this);
+
+        }
+       public void actionPerformed(ActionEvent e){
+                panel.removeAll();
+                if (e.getSource() == this.button1){
+                        this.end1 = new JLabel("end Download!");
+                        end1.setBounds(175,175,100,100);
+                        panel.add(end1);
+                        panel.revalidate();
+
+                }
+                else if (e.getSource() == this.button2){
+                        this.end2 = new JLabel("That is a terrible shame.");
+                        end2.setBounds(175,175,200,100);
+                        panel.add(end2);
+                        panel.revalidate();
+                }
+                panel.repaint();
+        }
+
+        public static void main(String[] args){
+                kadai4 a = new kadai4();
+                a.setBounds(950,400,400,400);
+                a.setVisible(true);
+        }
+
+
+}
+ユーザ向け解説：
+よくあるようなファイルやフォルダのダウンロードする際の応答を真似してみて作ってみました。また、選択肢で応答別の応答を返すようにしました。
+開発者向け解説：
+自分が作ろうとしてたレイアウトがうまくいかなかったのでsetBoundsで自由に配置できるようにしてみました。また、removeAll()を呼び出してpanelを一度消してif文でまた新しくadd()してrepeint（）で再配置し、revalidate()で再表示させました。正直、今回のレイアウトをもっとうまく使えたらsetBoundsを使わなくてもいけたのではないかと思ってます。
+
+kadai5:
+URL:http://www.tohoho-web.com/java/layout.htm
+カードレイアウト
+特徴：複数の部品をカードのスタックとして保持して、一番前のカードだけ表示する。next()や、first()などを使って順番を変えたりできる。見ていて思ったことは、PCのフォルダの構造ににていたのでこれを使うともっとわかりやすいフォルダ管理ができるのではと思いました。
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class kadai5 extends JFrame implements ActionListener{
+
+        private JButton button1;
+        private JLabel ti;
+        private JPanel panel;
+        private CardLayout layout;
+
+        public kadai5(){
+                super();
+                panel = new JPanel();
+                JPanel panel1 = new JPanel();
+                JPanel panel2 = new JPanel();
+                layout = new CardLayout();
+                panel.setLayout(layout);
+                panel.add(panel1);
+                panel.add(panel2);
+                this.button1 = new JButton("あいさつ");
+                this.ti = new JLabel("hello");
+
+                panel1.add(this.button1);
+                panel2.add(this.ti);
+
+                this.button1.addActionListener(this);
+                getContentPane().add(panel,BorderLayout.CENTER);
+
+        }
+        public void actionPerformed(ActionEvent e){
+        if (e.getSource() == this.button1){
+                layout.next(this.panel);
+        }
+
+        }
+
+        public static void main(String[] args){
+
+                kadai5 a = new kadai5();
+                a.setSize(800,800);
+                a.setLocation(100,100);
+                a.setVisible(true);
+        }
+
+
+
+}
+
+

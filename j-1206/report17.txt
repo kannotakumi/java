@@ -1,0 +1,184 @@
+情報　11番　菅野　匠　レポート17
+課題１:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+
+public class MyPanel extends JPanel implements MouseListener{
+        public MyPanel(){
+                setBackground(Color.white);
+                setPreferredSize(new Dimension(640,480));
+                this.addMouseListener(this);
+        }
+        public void mousePressed(MouseEvent e)
+        {
+                int x = e.getX();
+                int y = e.getY();
+                Graphics g = this.getGraphics();
+                g.drawOval(x,y,20,20);
+                g.dispose();
+                System.out.println(x);
+                System.out.println(y);
+
+        }
+        public void mouseReleased(MouseEvent e){}
+        public void mouseClicked(MouseEvent e){}
+        public void mouseEntered(MouseEvent e){}
+        public void mouseExited(MouseEvent e){}
+        public void mouseMoved(MouseEvent e){}
+        public void mouseDragged(MouseEvent e){}
+
+}
+
+import javax.swing.*;
+import java.awt.*;
+public class MyFrame extends JFrame {
+        private MyPanel mp;
+        public MyFrame(){
+                this.mp = new MyPanel();
+                JPanel p1 = new JPanel();
+                BorderLayout bord1 = new BorderLayout();
+                p1.add(this.mp,BorderLayout.CENTER);
+                getContentPane().add(p1);
+        }
+        public static void main(String[] args){
+                MyFrame a = new MyFrame();
+                a.setBounds(300,300,500,500);
+                a.setVisible(true);
+        }
+}
+
+開発者向け解説：
+クリックするとそのクリックした座標にサークルを貼り付けるもので、端末にはそのXとYが表示される。
+
+課題２：
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+public class MyFrame2 extends JFrame implements ChangeListener{
+        private MyPanel2 mp;
+        private JSlider s1,s2,s3;
+        private JTextField t1,t2,t3,t4;
+        public MyFrame2(){
+                this.mp = new MyPanel2();
+                JPanel p1 = new JPanel();
+                JPanel p2 = new JPanel();
+                this.s1 = new JSlider(0,255,0);
+                this.s2 = new JSlider(0,255,0);
+                this.s3 = new JSlider(0,255,0);
+                this.t1 = new JTextField("赤",5);
+                this.t2 = new JTextField("緑",5);
+                this.t3 = new JTextField("青",5);
+                BorderLayout bord1 = new BorderLayout();
+                GridLayout grid1 = new GridLayout(3,2);
+
+                p1.setLayout(bord1);
+                p2.setLayout(grid1);
+
+                p1.add(p2,BorderLayout.SOUTH);
+                p1.add(this.mp,BorderLayout.CENTER);
+                p2.add(this.s1);
+                p2.add(this.t1);
+                p2.add(this.s2);
+                p2.add(this.t2);
+                p2.add(this.s3);
+                p2.add(this.t3);
+
+                getContentPane().add(p1);
+                this.s1.addChangeListener(this);
+                this.s2.addChangeListener(this);
+                this.s3.addChangeListener(this);
+        }
+        public void stateChanged(ChangeEvent e){
+        if (e.getSource() == this.s1){
+                int r = this.s1.getValue();
+                this.t1.setText("赤" + r );
+                this.mp.setR(r);
+                }
+        else if (e.getSource() == this.s2){
+                int g = this.s2.getValue();
+                this.t2.setText("緑" + g);
+                this.mp.setG(g);
+                }
+        else if (e.getSource() == this.s3){
+                int b = this.s3.getValue();
+                this.t3.setText("青" + b);
+                this.mp.setB(b);
+                }
+        this.mp.repaint();
+    }
+
+        public static void main(String[] args){
+                MyFrame2 a = new MyFrame2();
+                a.setBounds(300,300,500,500);
+                a.setVisible(true);
+        }
+}
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+
+public class MyPanel2 extends JPanel implements MouseMotionListener,MouseListener{
+        private int saveX,saveY;
+        private int r,g,b;
+        private float bs;
+        public MyPanel2(){
+                setBackground(Color.white);
+                setPreferredSize(new Dimension(640,480));
+                this.addMouseListener(this);
+                this.addMouseMotionListener(this);
+        }
+        public void setR(int r){
+                this.r = r;
+        }
+        public void setG(int g){
+                this.g = g;
+        }
+        public void setB(int b){
+                this.b = b;
+        }
+        public void mousePressed(MouseEvent e)
+        {
+                this.saveX = e.getX();
+                this.saveY = e.getY();
+                /*Graphics g = this.getGraphics();
+                g.drawOval(x,y,20,20);
+                g.dispose();
+                System.out.println(x);
+                System.out.println(y);*/
+
+        }
+        public void mouseReleased(MouseEvent e){}
+        public void mouseClicked(MouseEvent e){}
+        public void mouseEntered(MouseEvent e){}
+        public void mouseExited(MouseEvent e){}
+        public void mouseMoved(MouseEvent e){}
+        public void mouseDragged(MouseEvent e){
+                int x = e.getX();
+                int y = e.getY();
+                Graphics g = this.getGraphics();
+                g.setColor(new Color(this.r,this.g,this.b));
+                g.drawLine(saveX,saveY,x,y);
+                this.saveX = x;
+                this.saveY = y;
+                g.dispose();
+
+
+        }
+
+}
+
+ユーザー向け解説:
+マウスをクリックしてドラッグすると線を引けます。また下の三つのバーで色を変更できます。
+セールスポイント：
+前回の課題を参考にしてスライダーなどを使って作りました。
+開発者向け解説：
+mousePressedで初期の座標を指定してそれをmouseDraggedで別のローカル変数として与えてドラッグさせた座標を初期値を入れた変数に代入しそれを初期値として見て動かしつづけると線が途切れないで線を描けるようにしました。
+
+課題３：
+課題２のmousePressのメソッドが線を書き始めるための初期化とみて考え
