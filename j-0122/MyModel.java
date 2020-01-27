@@ -15,7 +15,7 @@ public class MyModel {
 	public void setSeat(int wid,int len){
 		this.seat = wid*len;
 	}
-	public int reseat(){
+	public int reSeat(){
 		return this.seat;
 	}
 

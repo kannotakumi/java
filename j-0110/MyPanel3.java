@@ -28,7 +28,7 @@ public class MyPanel3 extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-				double rad = Math.toRadians(angle);
+		double rad = Math.toRadians(angle);
 		this.ex = 200;
 		this.ey = 200;
 		this.mx = (int)(Math.cos(rad) * distance) + ex;
