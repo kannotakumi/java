@@ -1,52 +1,73 @@
 import javax.swing.*;
 import java.awt.*;
 import java.net.*;
-public class MyModel {
+public class MyModel extends JApplet{
 	private MyController mc;
+	private MyView mv;
 	private int total_seat;
 	private int wid,len,studentnumber;
-        private MyView mv;
         private String[] sex_array;
         private String[] name_array;
         private int[] number_array;
 	private int name,seat,number;
-	private ImageIcon desk,boy,girl;
+	private Image desk,boy,girl;
+	private URL url1,url2,url3;
 
-	public MyModel(){
-		this.mc = new MyController();
-		this.total_seat = 0;
+	public void init(){
+		//this.mv = new MyView();
 		this.name = 0;
 		this.seat = 0;
 		this.number = 0;
-		URL url1 = MyModel.class.getResource("desk.png");
-		URL url2 = MyModel.class.getResource("boy.png");
-		URL url3 = MyModel.class.getResource("girl.png");
+		/*this.len = 0;
+		this.wid = 0;
+		this.total_seat = 0;*/
+		this.url1 = MyModel.class.getResource("desk.png");
+		this.url2 = MyModel.class.getResource("boy.png");
+		this.url3 = MyModel.class.getResource("girl.png");
 
-		this.desk = new ImageIcon(url1);
-		this.girl = new ImageIcon(url2);
-		this.boy = new ImageIcon(url3);	
+		this.desk =  super.getImage(url1);
+		//this.mc.getDesk(desk);
+		this.girl =  super.getImage(url3);
+		//this.mc.getGirl(girl);
+		this.boy = super.getImage(url2);
+		//this.mc.getBoy(boy);	
+	}
+	public Image getDesk(){
+		return this.desk;
+	}
+	public Image getGirl(){
+		return this.girl;
+	}
+	public Image getBoy(){
+		return this.boy;
 	}
 	
-	public void getSeat(){
-		this.total_seat = wid*len;
-		this.sex_array = new String[this.total_seat];
-		this.number_array = new int[this.total_seat];
-		this.name_array = new String[this.total_seat];
-	}
-	public void getLen(int len){
+	public void setLen(int len){
 		this.len = len;
+		System.out.println(this.len);
 	}
-	public void getWid(int wid){
+	public void setWid(int wid){
 		this.wid = wid;
+		System.out.println(this.wid);
 	}
-	public int setLen(){
+	public int getLen(){
+		System.out.println(this.len);
 		return this.len;
 	}
-	public int setWid(){
+	public int getWid(){
+		System.out.println(this.wid);
 		return this.wid;
 	}
-	public int setSeat(){
+	public int getSeat(){
+		int len = this.len;
+		int wid = this.wid;
+		this.total_seat = len*wid;
+	/*	this.sex_array = new String[this.total_seat];
+		this.number_array = new int[this.total_seat];
+		this.name_array = new String[this.total_seat];*/
+		System.out.println(this.total_seat);
 		return this.total_seat;
+
 	}
 	public void getName(String name){
 		
@@ -59,15 +80,12 @@ public class MyModel {
 		this.name ++;
 		}	
 	}
+	public void getSex(String :)
 	public String errorName(){
 		String str = "これ以上は入力できません";
 		
 		return str;
 		 
 	}
-	public JLabel setdesk(){
-		JLabel ldesk = new JLabel(this.desk);
-		return ldesk;
-		}
-
-	}
+}
+		

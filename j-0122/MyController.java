@@ -18,13 +18,14 @@ public class MyController extends JApplet implements ActionListener{
 	private String[] Ssex,Sname,Snumber;
 	//iint total = 0;
 	private JPanel Jseat;
-	private JLabel Lseat,lboy,lgarl; 
+	private JLabel Lseat,lboy,lgarl;
+       private Image desk,girl,boy;	
 	//private Image[] Iseat,Istudent;
 	//private JPanel seat,attendanece;	
 
 	public void init(){
-	this.mv = new MyView();
 	this.mm = new MyModel();
+	this.mv = new MyView(this);
 	this.Jseat = new JPanel();
 	JPanel mainp = new JPanel();
 	JPanel student = new JPanel();
@@ -88,18 +89,20 @@ public class MyController extends JApplet implements ActionListener{
 		if(e.getSource() == this.ok){
 				if(!(this.number.getText().equals("")) && !(this.sex.getText().equals("")) && !(this.name.getText().equals(""))){
 					this.mm.getName(this.name.getText());
-					this.name.setText(this.mm.errorName());
+					this.mm.getSex(this.name.getText()));
+					this.mm.getNumber
 				}		
 			}
 		else if (e.getSource() == this.ok2){
 				
 			if(!(this.tseatwid.getText().equals("")) && !(this.tseatwid.getText().equals(""))){
-				this.mm.getLen(Integer.parseInt(this.tseatlen.getText()));
-				this.mm.getWid(Integer.parseInt(this.tseatwid.getText()));
+				this.mm.setLen(Integer.parseInt(this.tseatlen.getText()));
+				this.mm.setWid(Integer.parseInt(this.tseatwid.getText()));
+
 				//int total = this.mm.setSeat();
-				int wid = this.mm.setWid();
-				int len = this.mm.setLen();
-				this.mv.getPanel(len,wid,this.mm.setdesk());
+				//int wid = this.mm.setWid();
+				//int len = this.mm.setLen();
+				//this.mv.getPanel(len,wid,this.mm.setdesk());
 
 				//GridLayout grid4 = new GridLayout(len,wid);
 				//this.Jseat.setLayout(grid4);		
@@ -111,6 +114,10 @@ public class MyController extends JApplet implements ActionListener{
 			}
 		}		
 	this.mv.repaint();
+	}
+	public MyModel getMc (){
+	
+		return this.mm;
 	}
 	
 	public static void main(String[] args){

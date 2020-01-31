@@ -5,36 +5,29 @@ public class MyView extends JPanel{
 	
 	private MyController mc;
 	private MyModel mm;
-	private JPanel Jseat;
-	private GridLayout grid1;
+	private int wid,len,total;
+	private Image desk,girl,boy;
 
-	public MyView(){
-		this.mc = new MyController();
-		this.mm = new MyModel();
-		this.Jseat = new JPanel();
+	public MyView(MyController MC){
+		this.mc = MC;
+		this.mm = this.mc.getMc();
 		setBackground(Color.white);
 		setPreferredSize(new Dimension(800,800));
 		
 	}
-	public int setTotal(int total){
-		int t = total;
-		return t;
-	}
-	public void getPanel(int len,int wid,JLabel desk){
-		this.grid1 = new GridLayout(len,wid);	
-		this.Jseat.setLayout(grid1);
-		int i = 0;
-		while(i <= setTotal(this.mm.setSeat())){
-			this.Jseat.add(desk);
-			i++;
-		}
-	}
-	public JPanel setPanel(){
-		return this.Jseat;
-		}
+	
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		System.out.println("画面が更新されました");
+		this.len = this.mm.getLen();
+	      	this.wid = this.mm.getWid();
+		this.total = this.mm.getSeat();
+		this.desk = this.mm.getDesk();
+		this.girl = this.mm.getGirl();
+		this.boy = this.mm.getBoy();
+
+	
+		System.out.println("縦:" + this.len + ",横:" + this.wid + ",合計人数:" + this.total);
 		
 		
 			
