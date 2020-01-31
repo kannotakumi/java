@@ -12,7 +12,7 @@ public class MyController extends JApplet implements ActionListener{
 	private JTextField number;
 	private JTextField tseatwid,tseatlen;
 	private JLabel lseatwid, lseatlen;
-	private JCheckBox num,se,na;
+	private JLabel num,se,na;
 	private JButton ok;
 	private JButton ok2;
 	private String[] Ssex,Sname,Snumber;
@@ -38,9 +38,9 @@ public class MyController extends JApplet implements ActionListener{
 	this.tseatwid = new JTextField(3);
 	this.tseatlen = new JTextField(3);
 
-	this.num = new JCheckBox("出席番号");
-	this.se = new JCheckBox("性別");
-	this.na = new JCheckBox("名前");
+	this.num = new JLabel("出席番号");
+	this.se = new JLabel("性別");
+	this.na = new JLabel("名前");
 	this.ok = new JButton("決定");
 	this.ok2 = new JButton("生徒数決定");
  
@@ -79,41 +79,37 @@ public class MyController extends JApplet implements ActionListener{
 	input.add(this.ok2);
 	
 	mainp.add(input,BorderLayout.SOUTH);
-	mainp.add(Jseat,BorderLayout.CENTER);
+	mainp.add(this.mv,BorderLayout.CENTER);
 	getContentPane().add(mainp);
 	this.ok.addActionListener(this);
 	this.ok2.addActionListener(this);
 	}
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == this.ok){
-			if(this.num.isSelected() && this.se.isSelected() && this.na.isSelected()){
-				if(!(this.number.getText().equals("")) && !(this.sex.getText().equals("")) && this.name.getText().equals("")){
-				
-				}
-			}
+				if(!(this.number.getText().equals("")) && !(this.sex.getText().equals("")) && !(this.name.getText().equals(""))){
+					this.mm.getName(this.name.getText());
+					this.name.setText(this.mm.errorName());
+				}		
 			}
 		else if (e.getSource() == this.ok2){
-			GridLayout grid4 = new GridLayout(Integer.parseInt(this.tseatlen.getText()),Integer.parseInt(this.tseatwid.getText()));
-			this.Jseat.setLayout(grid4);		
+				
 			if(!(this.tseatwid.getText().equals("")) && !(this.tseatwid.getText().equals(""))){
-				this.mm.setSeat(Integer.parseInt(this.tseatwid.getText()), Integer.parseInt(this.tseatlen.getText()));
-				int total = this.mm.reSeat();	
-				this.tseatwid.setText("生徒数は" + total + "です");
-				}
-		/*	
-			int total = this.mm.reSeat(); 
-			Image[] Sname = new Image[total];
-			Image[] Snumber = new Image[total];
-			Image[] Ssex = new Image[total];
-			Image[] Iseat = new Image[total];
-			Image[] Istudent = new Image[total];
-			
-			for(int i = 0; i < total ; i++ ){
-				URL desk_url = MyController.class.getResource("desk.png");
-				Image desk = super.getImage(desk_url);
-							
-			}*/
-		}
+				this.mm.getLen(Integer.parseInt(this.tseatlen.getText()));
+				this.mm.getWid(Integer.parseInt(this.tseatwid.getText()));
+				//int total = this.mm.setSeat();
+				int wid = this.mm.setWid();
+				int len = this.mm.setLen();
+				this.mv.getPanel(len,wid,this.mm.setdesk());
+
+				//GridLayout grid4 = new GridLayout(len,wid);
+				//this.Jseat.setLayout(grid4);		
+				//this.tseatwid.setText("生徒数は" + total + "です");
+				//while(i <= total ){	
+				//this.Jseat.add(this.mm.setdesk());
+				//i++;				
+				//}
+			}
+		}		
 	this.mv.repaint();
 	}
 	
