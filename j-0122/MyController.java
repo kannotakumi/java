@@ -15,11 +15,14 @@ public class MyController extends JApplet implements ActionListener{
 	private JLabel num,se,na;
 	private JButton ok;
 	private JButton ok2;
+	private JButton shuffle;
+	private JButton reseat;
 	private String[] Ssex,Sname,Snumber;
 	//iint total = 0;
 	private JPanel Jseat;
 	private JLabel Lseat,lboy,lgarl;
-       private Image desk,girl,boy;	
+       private Image desk,girl,boy;
+	private boolean shuf;      
 	//private Image[] Iseat,Istudent;
 	//private JPanel seat,attendanece;	
 
@@ -44,6 +47,8 @@ public class MyController extends JApplet implements ActionListener{
 	this.na = new JLabel("名前");
 	this.ok = new JButton("決定");
 	this.ok2 = new JButton("生徒数決定");
+	this.shuffle = new JButton("席替え開始");
+	this.reseat = new JButton("再描画");
  
 	this.number = new JTextField(5);
 	this.sex = new JTextField(1);
@@ -81,24 +86,31 @@ public class MyController extends JApplet implements ActionListener{
 	
 	mainp.add(input,BorderLayout.SOUTH);
 	mainp.add(this.mv,BorderLayout.CENTER);
+	mainp.add(this.shuffle,BorderLayout.NORTH);
+	mainp.add(this.reseat,BorderLayout.EAST);
 	getContentPane().add(mainp);
 	this.ok.addActionListener(this);
 	this.ok2.addActionListener(this);
+	this.shuffle.addActionListener(this);
+	this.reseat.addActionListener(this);
 	}
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == this.ok){
-				if(!(this.number.getText().equals("")) && !(this.sex.getText().equals("")) && !(this.name.getText().equals(""))){
+		//this.mm.getContName();	
+			if(!(this.number.getText().equals("")) && !(this.sex.getText().equals("")) && !(this.name.getText().equals(""))){
+
 					this.mm.getName(this.name.getText());
-					this.mm.getSex(this.name.getText()));
-					this.mm.getNumber
+					this.mm.getSex(this.sex.getText());
+					this.mm.getNumber(this.number.getText());
 				}		
 			}
 		else if (e.getSource() == this.ok2){
 				
+			this.mm.getContInit();
 			if(!(this.tseatwid.getText().equals("")) && !(this.tseatwid.getText().equals(""))){
 				this.mm.setLen(Integer.parseInt(this.tseatlen.getText()));
 				this.mm.setWid(Integer.parseInt(this.tseatwid.getText()));
-
+				this.mm.getSeat();
 				//int total = this.mm.setSeat();
 				//int wid = this.mm.setWid();
 				//int len = this.mm.setLen();
@@ -112,11 +124,17 @@ public class MyController extends JApplet implements ActionListener{
 				//i++;				
 				//}
 			}
+		}
+		else if (e.getSource() == this.shuffle){
+			this.mm.getContShuf();
 		}		
+		else if (e.getSource() == this.reseat){
+			this.mm.getContReseat();
+		}
 	this.mv.repaint();
 	}
-	public MyModel getMc (){
-	
+	public MyModel getMc()
+	{
 		return this.mm;
 	}
 	
