@@ -21,7 +21,7 @@ public class MyController extends JApplet implements ActionListener{
 	//iint total = 0;
 	private JPanel Jseat;
 	private JLabel Lseat,lboy,lgarl;
-       private Image desk,girl,boy;
+       	private Image desk,girl,boy;
 	private boolean shuf;      
 	//private Image[] Iseat,Istudent;
 	//private JPanel seat,attendanece;	
@@ -35,6 +35,20 @@ public class MyController extends JApplet implements ActionListener{
 	//this.attendance = new JPanel();
 	JPanel info = new JPanel();
 	JPanel input = new JPanel();
+
+	URL desk_url = MyController.class.getResource("desk.png");
+	Image desk = super.getImage(desk_url);
+	this.mm.setDesk(desk);
+
+	URL girl_url = MyController.class.getResource("girl.png");
+	Image girl = super.getImage(girl_url);
+	this.mm.setGirl(girl);
+
+	URL boy_url = MyController.class.getResource("boy.png");
+	Image boy = super.getImage(boy_url);
+	this.mm.setBoy(boy);
+
+
 
 	this.lseatwid = new JLabel("席の縦の長さは？");
 	this.lseatlen = new JLabel("席の横の長さは？");

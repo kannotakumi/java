@@ -27,7 +27,7 @@ public class MyModel{
 		/*this.len = 0;
 		this.wid = 0;
 		this.total_seat = 0;*/
-		Toolkit tk = Toolkit.getDefaultToolkit();
+		//Toolkit tk = Toolkit.getDefaultToolkit();
 		/*this.url1 = MyModel.class.getResource("desk.png");
 
 		this.desk =  super.getImage(url1);
@@ -37,13 +37,22 @@ public class MyModel{
 		*/
 		//this.mc.getDesk(desk);
 
-		this.desk = tk.getImage("desk.png");
+		//this.desk = tk.getImage("desk.png");
 		//this.mv.setDesk(this.desk);
-		this.girl = tk.getImage("girl.png");
+		//this.girl = tk.getImage("girl.png");
 		//this.mc.getGirl(girl);
-		this.boy = tk.getImage("boy.png");
+		//this.boy = tk.getImage("boy.png");
 		//this.mc.getBoy(boy);	
-		System.out.println(this.desk);
+		//System.out.println(this.desk);
+	}
+	public void setDesk(Image desk){
+		this.desk = desk;
+	}
+	public void setGirl(Image girl){
+		this.girl = girl;
+	}
+	public void setBoy(Image boy){
+		this.boy = boy;
 	}
 	public Image getDesk(){
 		
