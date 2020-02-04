@@ -199,7 +199,7 @@ public class MyModel{
 		return this.Rname_array;
 	}
 	public String[] setRnumber(){
-		return this.Rname_array;
+		return this.Rnumber_array;
 	}
 }
 		

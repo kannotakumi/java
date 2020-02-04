@@ -57,14 +57,14 @@ public class MyView extends JPanel{
 				for(int j = 0;j < this.mm.getWid(); j++){
 				if(sex[t].equals("man")){
 					g.drawImage(this.mm.getBoy(),x,y,this);
-					g.drawString(name[t],x, y + 100);
-					x += 100;
+					g.drawString(number[t] + ":" + sex[t] + ":" + name[t],x, y + 100);
+					x += 150;
 					t++;
 				}
 				else if (sex[t].equals("woman")){
 					g.drawImage(this.mm.getGirl(),x,y,this);
-					g.drawString(name[t],x, y + 100);
-					x += 100;
+					g.drawString(number[t] + ":" + sex[t] + ":" + name[t],x, y + 100);
+					x += 150;
 					t++;
 				}
 			}
